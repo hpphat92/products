@@ -12,12 +12,7 @@ var SearchForm = React.createClass({
         this.setState({
             value: this.refs.input.value
         });
-    },
-    search: function () {
-        this.setState({
-            value: this.refs.input.value,
-        });
-        this.props.onChange(this.state.value);
+        this.props.onChange(this.refs.input.value);
     },
     render() {
         return (
@@ -27,10 +22,11 @@ var SearchForm = React.createClass({
                         <div className="pull-left search-group-section">
                             <div className="input-group input-group-lg search-group">
                                 <span className="hiddenSearch"></span>
-                                <input className="form-control"
+                                <input className="form-control productSearchBar"
+                                       id="productSearchBar"
                                        type="text"
                                        ref="input"
-                                       placeholder="Enter text for search"
+                                       placeholder="Search products.."
                                        onChange={this.handleChange}
                                     />
                             </div>
