@@ -21,20 +21,20 @@ var SearchForm = React.createClass({displayName: "SearchForm",
     },
     render() {
         return (
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-10"}, 
-                    React.createElement("input", {className: "form-control", 
-                           type: "text", 
-                           ref: "input", 
-                           placeholder: "Enter text for search", 
-                           onChange: this.handleChange}
+            React.createElement("section", {className: "site-section site-section-light site-section-top"}, 
+                React.createElement("div", {className: "container text-center"}, 
+                    React.createElement("div", {className: "desktop-only search-desktop-section"}, 
+                        React.createElement("div", {className: "pull-left search-group-section"}, 
+                            React.createElement("div", {className: "input-group input-group-lg search-group"}, 
+                                React.createElement("span", {className: "hiddenSearch"}), 
+                                React.createElement("input", {className: "form-control", 
+                                       type: "text", 
+                                       ref: "input", 
+                                       placeholder: "Enter text for search", 
+                                       onChange: this.handleChange}
+                                    )
+                            )
                         )
-                ), 
-
-                React.createElement("div", {className: "col-md-2"}, 
-                    React.createElement("button", {className: "glyphicon glyphicon-search btn btn-primary", 
-                            onClick: this.search
-                        }
                     )
                 )
             )

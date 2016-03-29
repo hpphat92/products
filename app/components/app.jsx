@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var ProductAdd = require('./product-add');
 var Products = require('./products');
 var SearchForm = require('./search');
+var Header = require('./header/header');
 var App = React.createClass({
 
     getInitialState: function () {
@@ -48,11 +49,11 @@ var App = React.createClass({
     },
     render: function () {
         return (
-            <div>
-                <ProductAdd onAdd={this.onAddNewProduct}/>
+            <span>
+                <Header/>
                 <SearchForm onChange={this.search}></SearchForm>
                 <Products listProduct={this.props.productList}/>
-            </div>
+            </span>
         )
     }
 });

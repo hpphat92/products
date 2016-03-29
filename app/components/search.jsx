@@ -21,23 +21,23 @@ var SearchForm = React.createClass({
     },
     render() {
         return (
-            <div className="row">
-                <div className="col-md-10">
-                    <input className="form-control"
-                           type="text"
-                           ref="input"
-                           placeholder="Enter text for search"
-                           onChange={this.handleChange}
-                        />
+            <section className="site-section site-section-light site-section-top">
+                <div className="container text-center">
+                    <div className="desktop-only search-desktop-section">
+                        <div className="pull-left search-group-section">
+                            <div className="input-group input-group-lg search-group">
+                                <span className="hiddenSearch"></span>
+                                <input className="form-control"
+                                       type="text"
+                                       ref="input"
+                                       placeholder="Enter text for search"
+                                       onChange={this.handleChange}
+                                    />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div className="col-md-2">
-                    <button className="glyphicon glyphicon-search btn btn-primary"
-                            onClick={this.search}
-                        >
-                    </button>
-                </div>
-            </div>
+            </section>
         );
     }
 });
