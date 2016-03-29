@@ -12,6 +12,7 @@
     "gulp-browserify": "^0.5.1",
     "gulp-react": "^3.1.0",
     "react": "^0.14.7",
+    "react-bootstrap": "^0.28.4",
     "react-dom": "^0.14.7"
   },
   "devDependencies": {

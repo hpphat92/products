@@ -1,10 +1,9 @@
 var React = require('React');
+var Form = require('./form');
 var Product = React.createClass({
   render: function () {
     return (
-      < div >
-        This is product data
-      </div>
+      <Form></Form>
     )
   }
 });
