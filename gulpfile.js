@@ -1,6 +1,6 @@
 var gulp  = require('gulp');
-var react = require('gulp-react');
 var browserify = require('gulp-browserify');
+var react = require('gulp-react');
 gulp.task('jsx', function(){
     return gulp.src( 'app/components/*.jsx' )
         .pipe( react() )
@@ -9,7 +9,7 @@ gulp.task('jsx', function(){
 });
 
 gulp.task( 'browserify', function() {
-    return gulp.src( 'app/js/products.js' )
+    return gulp.src( 'app/js/app.js' )
         .pipe( browserify() )
         .pipe( gulp.dest( 'app' ) )
     ;

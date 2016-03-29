@@ -9,9 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browserify": "^13.0.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-react": "^3.1.0",
-    "react": "^0.14.7"
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7"
   },
   "devDependencies": {
     "gulp": "^3.9.1"

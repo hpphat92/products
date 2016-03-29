@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('React');
 var Product = React.createClass({
   render: function () {
     return (
