@@ -1,0 +1,5 @@
+/.idea
+/node_modules/.bin
+/node_modules/gulp-react
+/node_modules/gulp
+/node_modules
