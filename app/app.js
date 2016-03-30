@@ -82,7 +82,8 @@ var Body = React.createClass({displayName: "Body",
             cache: false,
             success: function (data) {
                 this.originalList.push.apply(this.originalList, data.result);
-                this.setState({productList: this.originalList});
+                this.search(this.state.searchKey);
+                //this.setState({productList: this.originalList});
                 this.offset += this.limit;
             }.bind(this),
             error: function (xhr, status, err) {
@@ -99,7 +100,6 @@ var Body = React.createClass({displayName: "Body",
         window.addEventListener('scroll', this.handleScroll);
     },
     handleScroll: function (e) {
-        console.log(window.scrollY, window.innerHeight, this.getDOMNode().scrollHeight, window.scrollY > this.getDOMNode().scrollHeight - 50);
         if (window.scrollY + window.innerHeight > this.getDOMNode().scrollHeight - 50) {
             this.loadData();
         }
@@ -110,7 +110,8 @@ var Body = React.createClass({displayName: "Body",
             return p.name.toLowerCase().indexOf(filterValue.toLowerCase()) >= 0;
         });
         this.setState({
-            productList: filteredProducts
+            productList: filteredProducts,
+            searchKey: filterValue
         });
     },
     render: function () {

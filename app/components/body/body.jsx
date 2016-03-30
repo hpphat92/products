@@ -34,7 +34,7 @@ var Body = React.createClass({
             cache: false,
             success: function (data) {
                 this.originalList.push.apply(this.originalList, data.result);
-                this.setState({productList: this.originalList});
+                this.search(this.state.searchKey);
                 this.offset += this.limit;
             }.bind(this),
             error: function (xhr, status, err) {
@@ -61,7 +61,8 @@ var Body = React.createClass({
             return p.name.toLowerCase().indexOf(filterValue.toLowerCase()) >= 0;
         });
         this.setState({
-            productList: filteredProducts
+            productList: filteredProducts,
+            searchKey: filterValue
         });
     },
     render: function () {
