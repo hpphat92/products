@@ -6,7 +6,7 @@ var ProductList = require('./products');
 var SearchForm = require('./search');
 var LeftFilter = require('./leftFilter');
 var Cart = require('./cart');
-var Body = React.createClass({
+var Body = React.createClass({displayName: "Body",
     originalList: [],
     offset: 0,
     limit: 20,
@@ -51,6 +51,7 @@ var Body = React.createClass({
         window.addEventListener('scroll', this.handleScroll);
     },
     handleScroll: function (e) {
+        console.log(window.scrollY, window.innerHeight, this.getDOMNode().scrollHeight, window.scrollY > this.getDOMNode().scrollHeight - 50);
         if (window.scrollY + window.innerHeight > this.getDOMNode().scrollHeight - 50) {
             this.loadData();
         }
@@ -66,40 +67,40 @@ var Body = React.createClass({
     },
     render: function () {
         return (
-            <div>
-                <SearchForm onChange={this.search}/>
-                <section className="site-section site-section-location">
-                    <div className="container">
-                        <div className="col-md-2">
-                        </div>
-                        <div className="col-md-7">
-                            <div className="col-md-5 first-message">
+            React.createElement("div", null, 
+                React.createElement(SearchForm, {onChange: this.search}), 
+                React.createElement("section", {className: "site-section site-section-location"}, 
+                    React.createElement("div", {className: "container"}, 
+                        React.createElement("div", {className: "col-md-2"}
+                        ), 
+                        React.createElement("div", {className: "col-md-7"}, 
+                            React.createElement("div", {className: "col-md-5 first-message"}
 
-                            </div>
-                            <div className="col-md-2 ajax-loading-product">
+                            ), 
+                            React.createElement("div", {className: "col-md-2 ajax-loading-product"}
 
-                            </div>
-                            <div className="col-md-5 first-message">
+                            ), 
+                            React.createElement("div", {className: "col-md-5 first-message"}
 
-                            </div>
-                        </div>
-                        <div className="col-md-3 desktop-only" style={this.state.paddingTop14}>
-                            <span className="mini-cart-title">CART</span>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-2">
-                                <LeftFilter/>
-                            </div>
-                            <div className="col-md-7">
-                                <ProductList listProduct={this.state.productList}/>
-                            </div>
-                            <div className="col-md-3 col-lg-3 cart-quick-view">
-                                <Cart/>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+                            )
+                        ), 
+                        React.createElement("div", {className: "col-md-3 desktop-only", style: this.state.paddingTop14}, 
+                            React.createElement("span", {className: "mini-cart-title"}, "CART")
+                        ), 
+                        React.createElement("div", {className: "row"}, 
+                            React.createElement("div", {className: "col-md-2"}, 
+                                React.createElement(LeftFilter, null)
+                            ), 
+                            React.createElement("div", {className: "col-md-7"}, 
+                                React.createElement(ProductList, {listProduct: this.state.productList})
+                            ), 
+                            React.createElement("div", {className: "col-md-3 col-lg-3 cart-quick-view"}, 
+                                React.createElement(Cart, null)
+                            )
+                        )
+                    )
+                )
+            )
         )
     }
 });

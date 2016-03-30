@@ -56,6 +56,8 @@ var LeftFilter = require('./leftFilter');
 var Cart = require('./cart');
 var Body = React.createClass({displayName: "Body",
     originalList: [],
+    offset: 0,
+    limit: 20,
     getInitialState: function () {
         return {
             productList: [],
@@ -66,20 +68,41 @@ var Body = React.createClass({displayName: "Body",
             searchKey: ''
         }
     },
-    componentWillMount: function () {
+    loadData: function () {
         $.ajax({
-            url: "http://catalogue.marketoi.com/index.php/api/Front/products?user_id=null&device_id=5xJpgutpmDvhCsFMQ&limit=20&offset=20&time_illico=1458598834653",
+            url: "http://catalogue.marketoi.com/index.php/api/Front/products",
+            data: $.param({
+                user_id: null,
+                device_id: '5xJpgutpmDvhCsFMQ',
+                limit: this.limit,
+                offset: this.offset,
+                time_illico: 1458598834653
+            }),
             dataType: 'json',
             cache: false,
             success: function (data) {
-                this.originalList = data.result;
-                this.setState({productList: data.result});
+                this.originalList.push.apply(this.originalList, data.result);
+                this.setState({productList: this.originalList});
+                this.offset += this.limit;
             }.bind(this),
             error: function (xhr, status, err) {
                 this.originalList = [];
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
+    },
+    componentWillMount: function () {
+        window.removeEventListener('scroll', this.handleScroll);
+        this.loadData();
+    },
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    handleScroll: function (e) {
+        console.log(window.scrollY, window.innerHeight, this.getDOMNode().scrollHeight, window.scrollY > this.getDOMNode().scrollHeight - 50);
+        if (window.scrollY + window.innerHeight > this.getDOMNode().scrollHeight - 50) {
+            this.loadData();
+        }
     },
     search: function (filterValue) {
         var products = this.originalList;
@@ -240,17 +263,17 @@ module.exports = ProductAdd;
 },{"React":138}],6:[function(require,module,exports){
 var React = require('React');
 var Product = require('./Product');
+
+
 var Products = React.createClass({displayName: "Products",
     render: function () {
         if (this.props.listProduct.length) {
             return (
                 React.createElement("div", {className: "row store-items", id: "products_section"}, 
                     React.createElement("div", {className: "customGrid"}, 
-
-                        this.props.listProduct.map(function (v) {
-                            return React.createElement(Product, {key: v.id, ProductInfo: v});
+                        this.props.listProduct.map(function (v,id) {
+                            return React.createElement(Product, {key: id, ProductInfo: v});
                         })
-
                     )
 
                 )
