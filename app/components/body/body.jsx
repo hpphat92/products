@@ -1,6 +1,7 @@
 var React = require('React');
 var $ = require('jquery');
 var ReactDOM = require('react-dom');
+var InfiniteScroll = require('./infiniteScroll');
 var ProductAdd = require('./product-add');
 var ProductList = require('./products');
 var SearchForm = require('./search');
@@ -43,18 +44,6 @@ var Body = React.createClass({
             }.bind(this)
         });
     },
-    componentWillMount: function () {
-        window.removeEventListener('scroll', this.handleScroll);
-        this.loadData();
-    },
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    handleScroll: function (e) {
-        if (window.scrollY + window.innerHeight > this.getDOMNode().scrollHeight - 50) {
-            this.loadData();
-        }
-    },
     search: function (filterValue) {
         var products = this.originalList;
         var filteredProducts = products.filter(function (p) {
@@ -92,7 +81,7 @@ var Body = React.createClass({
                                 <LeftFilter/>
                             </div>
                             <div className="col-md-7">
-                                <ProductList listProduct={this.state.productList}/>
+                                <InfiniteScroll list={this.state.productList} fetchDataCallback={this.loadData} delegate={<ProductList listProduct={this.state.productList}/>}/>
                             </div>
                             <div className="col-md-3 col-lg-3 cart-quick-view">
                                 <Cart/>
