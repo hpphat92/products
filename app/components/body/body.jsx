@@ -81,9 +81,7 @@ var Body = React.createClass({
                                 <LeftFilter/>
                             </div>
                             <div className="col-md-7">
-                                <InfiniteScroll fetchDataCallback={this.loadData} delegate={<ProductList listProduct={this.state.productList}/>}>
-
-                                </InfiniteScroll>
+                                <InfiniteScroll list={this.state.productList} fetchDataCallback={this.loadData} delegate={<ProductList listProduct={this.state.productList}/>}/>
                             </div>
                             <div className="col-md-3 col-lg-3 cart-quick-view">
                                 <Cart/>

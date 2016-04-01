@@ -1,6 +1,7 @@
 var React = require('React');
 var $ = require('jquery');
 var ReactDOM = require('react-dom');
+var InfiniteScroll = require('./infiniteScroll');
 var ProductAdd = require('./product-add');
 var ProductList = require('./products');
 var SearchForm = require('./search');
@@ -35,7 +36,6 @@ var Body = React.createClass({displayName: "Body",
             success: function (data) {
                 this.originalList.push.apply(this.originalList, data.result);
                 this.search(this.state.searchKey);
-                //this.setState({productList: this.originalList});
                 this.offset += this.limit;
             }.bind(this),
             error: function (xhr, status, err) {
@@ -43,18 +43,6 @@ var Body = React.createClass({displayName: "Body",
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
-    },
-    componentWillMount: function () {
-        window.removeEventListener('scroll', this.handleScroll);
-        this.loadData();
-    },
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    handleScroll: function (e) {
-        if (window.scrollY + window.innerHeight > this.getDOMNode().scrollHeight - 50) {
-            this.loadData();
-        }
     },
     search: function (filterValue) {
         var products = this.originalList;
@@ -93,7 +81,7 @@ var Body = React.createClass({displayName: "Body",
                                 React.createElement(LeftFilter, null)
                             ), 
                             React.createElement("div", {className: "col-md-7"}, 
-                                React.createElement(ProductList, {listProduct: this.state.productList})
+                                React.createElement(InfiniteScroll, {list: this.state.productList, fetchDataCallback: this.loadData, delegate: React.createElement(ProductList, {listProduct: this.state.productList})})
                             ), 
                             React.createElement("div", {className: "col-md-3 col-lg-3 cart-quick-view"}, 
                                 React.createElement(Cart, null)
