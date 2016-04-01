@@ -22,7 +22,7 @@ var Body = React.createClass({displayName: "Body",
         }
     },
     loadData: function () {
-        $.ajax({
+        return $.ajax({
             url: "http://catalogue.marketoi.com/index.php/api/Front/products",
             data: $.param({
                 user_id: null,
