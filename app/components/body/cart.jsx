@@ -1,5 +1,5 @@
 var React = require('react');
-var Cart = React.createClass({
+var InfiniteScroll = React.createClass({
     getInitialState: function () {
         return {
             displayBlock: {
@@ -39,4 +39,4 @@ var Cart = React.createClass({
     }
 });
 
-module.exports = Cart;
+module.exports = InfiniteScroll;
