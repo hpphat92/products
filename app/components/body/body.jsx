@@ -11,6 +11,7 @@ var Body = React.createClass({
     originalList: [],
     offset: 0,
     limit: 20,
+    startSearching: false,
     getInitialState: function () {
         return {
             productList: [],
@@ -21,7 +22,23 @@ var Body = React.createClass({
             searchKey: ''
         }
     },
+    searchFilter: function (key) {
+        this.offset = 0;
+        return $.ajax({
+            url: "http://catalogue.marketoi.com/index.php/api/Front/products",
+            method: 'GET',
+            data: $.param({
+                user_id: null,
+                search: key,
+                limit: this.limit,
+                offset: this.offset
+            }),
+            dataType: 'json',
+            cache: false
+        });
+    },
     loadData: function () {
+        var self = this;
         return $.ajax({
             url: "http://catalogue.marketoi.com/index.php/api/Front/products",
             data: $.param({
@@ -29,14 +46,19 @@ var Body = React.createClass({
                 device_id: '5xJpgutpmDvhCsFMQ',
                 limit: this.limit,
                 offset: this.offset,
-                time_illico: 1458598834653
+                time_illico: 1458598834653,
+                search: self.state.searchKey
             }),
             dataType: 'json',
             cache: false,
             success: function (data) {
-                this.originalList.push.apply(this.originalList, data.result);
-                this.search(this.state.searchKey);
-                this.offset += this.limit;
+                if (data.result && data.status !== "false") {
+                    this.originalList.push.apply(this.originalList, data.result);
+                    this.offset += this.limit;
+                    this.setState({
+                        productList: this.originalList
+                    });
+                }
             }.bind(this),
             error: function (xhr, status, err) {
                 this.originalList = [];
@@ -45,14 +67,21 @@ var Body = React.createClass({
         });
     },
     search: function (filterValue) {
-        var products = this.originalList;
-        var filteredProducts = products.filter(function (p) {
-            return p.name.toLowerCase().indexOf(filterValue.toLowerCase()) >= 0;
-        });
-        this.setState({
-            productList: filteredProducts,
+        var self = this;
+        self.setState({
             searchKey: filterValue
         });
+        this.searchFilter(filterValue).then(function (resp) {
+            if (resp.result && resp.status !== "false") {
+                self.originalList = resp.result;
+                self.offset += self.limit;
+                self.setState({
+                    productList: self.originalList
+                });
+            }
+
+        })
+
     },
     render: function () {
         return (
@@ -81,7 +110,8 @@ var Body = React.createClass({
                                 <LeftFilter/>
                             </div>
                             <div className="col-md-7">
-                                <InfiniteScroll list={this.state.productList} fetchDataCallback={this.loadData} delegate={<ProductList listProduct={this.state.productList}/>}/>
+                                <InfiniteScroll fetchDataCallback={this.loadData}
+                                                delegate={<ProductList listProduct={this.state.productList}/>}/>
                             </div>
                             <div className="col-md-3 col-lg-3 cart-quick-view">
                                 <Cart/>
