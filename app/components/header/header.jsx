@@ -5,7 +5,7 @@ var Header = React.createClass({
         return [
             {
                 name: 'About',
-                href: '/about'
+                href: '/products/app/#!/about'
             },
             {
                 name: 'Support: 0126.449.2309',
